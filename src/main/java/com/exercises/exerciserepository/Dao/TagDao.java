@@ -20,7 +20,7 @@ public class TagDao {
         return entityManager.find(Tag.class, id);
     }
 
-    public void saveAuthor(Tag tag) {
+    public void saveTag(Tag tag) {
         entityManager.persist(tag);
     }
 
