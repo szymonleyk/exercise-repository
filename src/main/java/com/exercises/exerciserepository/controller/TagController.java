@@ -1,4 +1,4 @@
-package com.exercises.exerciserepository;
+package com.exercises.exerciserepository.controller;
 
 import com.exercises.exerciserepository.Dao.TagDao;
 import com.exercises.exerciserepository.domain.Tag;
