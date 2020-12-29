@@ -10,6 +10,7 @@ import org.springframework.transaction.annotation.Transactional;
 
 import java.util.Collection;
 import java.util.HashSet;
+import java.util.List;
 
 @Component
 public class StartupApp {
@@ -25,10 +26,20 @@ public class StartupApp {
     @EventListener(ApplicationReadyEvent.class)
     public void initializeApp() {
         testAddNewTask();
-        testGetAllTasks();
         testGetTask();
+        testGetAllTasks();
+        testGetTasksByTagName("ifi");
         testChangeTaskValues();
         testDeleteTask();
+    }
+
+    private void testGetTasksByTagName(String tagName) {
+        List<Task> tasksByTagName = service.getTasksByTagName(tagName);
+        if (!tasksByTagName.isEmpty()) {
+            System.out.println("Znaleziono zadanie z tagiem if. Ilość zadań " + tasksByTagName.size());
+        } else {
+            System.out.println("Nie znaleziono otagowanego zadania");
+        }
     }
 
     private void testAddNewTask() {
@@ -62,7 +73,7 @@ public class StartupApp {
 
     @Transactional
     void testChangeTaskValues() {
-        System.out.println("Tytuł zadanie przed zmianą: "+ service.getTask(1L).getTitle());
+        System.out.println("Tytuł zadanie przed zmianą: " + service.getTask(1L).getTitle());
         Task taskWithUpdateValues = new Task("Nowy tytuł", "Nowy opis");
         service.update(1L, taskWithUpdateValues);
         if (service.getTask(1L).getTitle().contains("Nowy tytuł")) {
@@ -73,11 +84,11 @@ public class StartupApp {
     }
 
     private void testDeleteTask() {
-        if(service.getAllTasks().size() > 0){
+        if (service.getAllTasks().size() > 0) {
             String taskTitleBeforeDelete = service.getTask(1L).getTitle();
             service.deleteTask(1L);
             System.out.println("Usunięto zadnie o tytule: " + taskTitleBeforeDelete);
-        }else {
+        } else {
             System.out.println("Brak zadań w bazie danych");
         }
     }

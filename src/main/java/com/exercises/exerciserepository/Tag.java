@@ -16,7 +16,7 @@ public class Tag {
     @Column(name = "name")
     private String tagName;
 
-    @ManyToMany(mappedBy = "tags")
+    @ManyToMany(mappedBy = "tags", fetch = FetchType.EAGER)
     private Collection<Task> tasks = new HashSet<>();
 
     public Tag() {
